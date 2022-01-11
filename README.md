@@ -1,3 +1,3 @@
-# SimpleSS
+# simple tcp
 
-demo about ss
+demo about tcp/ip
