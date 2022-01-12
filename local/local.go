@@ -11,12 +11,27 @@ type LsLocal struct {
 	*core.SecureSocket
 }
 
-func NewLsLocal(password *core.Password, listAddr, remoteAdd *net.TCPAddr) *LsLocal {
+func NewLsLocal(pwd string, localListenAddr, remoteListenAddr string) *LsLocal {
+	password, err := core.ParsePassword(pwd)
+	if err != nil {
+		log.Println(err)
+		return nil
+	}
+	localListen, err := net.ResolveTCPAddr("tcp", localListenAddr)
+	if err != nil {
+		log.Println(err)
+		return nil
+	}
+	remoteListen, err := net.ResolveTCPAddr("tcp", remoteListenAddr)
+	if err != nil {
+		log.Println(err)
+		return nil
+	}
 	return &LsLocal{
 		SecureSocket: &core.SecureSocket{
 			Cipher:     core.NewCipher(password),
-			ListAddr:   listAddr,
-			RemoteAddr: remoteAdd,
+			ListAddr:   localListen,
+			RemoteAddr: remoteListen,
 		},
 	}
 }

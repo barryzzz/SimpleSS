@@ -89,7 +89,7 @@ func (LsServer *LsServer) handleConn(localConn *net.TCPConn) {
 		Port: int(binary.BigEndian.Uint16(dPort)),
 	}
 	dstServer, err := net.DialTCP("tcp", nil, dstAddr)
-	log.Println("监控:", dstAddr.IP)
+	log.Println("监控:", dstAddr.String())
 	if err != nil {
 		log.Println(err)
 		return
